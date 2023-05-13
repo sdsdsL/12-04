@@ -44,10 +44,10 @@ SELECT COUNT (`length`) film id FROM film f WHERE `length` > (SELECT AVG(`length
 Получите информацию, за какой месяц была получена наибольшая сумма платежей, и добавьте информацию по количеству аренд за этот месяц.
 
 ```mysql
-SELECT MONTH(payment date),SUM(amount),COUNT(*) FROM payment GROUP BY payment date HAVING SUM(amount)>=(SELECT SUM(amount) FROM payment GROUP BY payment date ORDER BY SUM(amount) DESC LIMIT 1);
+select date_format(payment_date, '%m-%Y') as date, count(rental.rental_id) as rental_count, sum(amount) as month_amount from payment left join rental on payment.rental_id = rental.rental_id group by date_format(payment_date, '%m-%Y') order by sum(amount) desc limit 1;
 ```
 
-![](https://github.com/sdsdsL/12-04/blob/main/img/3.png)
+![](https://github.com/sdsdsL/12-04/blob/main/img/3_reworked.png)
 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
